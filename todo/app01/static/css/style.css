@@ -1,0 +1,86 @@
+body {
+    width: 100% !important;
+    height: 100vh !important;
+    background-color:rgb(234, 246, 252) !important;
+}
+
+
+#title {
+    margin: 30px auto;
+    text-align: center;
+    font-size: 30px;
+    color: orange;
+}
+
+
+.inputZone {
+    text-align: center;
+}
+
+#input{
+    height: 64px;
+    width: 50%;
+    font-size: 18px;
+}
+
+#input-btn{
+    height: 64px;
+    width: 10%;
+    font-size: 18px;
+    background-color: rgb(249, 243, 231);
+    position: relative;
+    right: 0;
+}
+
+.tip {
+    color: red;
+    margin: 0 auto;
+    margin-top: 5px;
+    width: 60%;
+}
+
+.list{
+    width: 60%;
+    margin: 30px auto;
+}
+
+.panel-heading {
+    text-align: left;
+}
+
+#list{
+    text-align: left;
+}
+
+ul {
+    padding: 0;
+}
+
+ul li {
+    list-style-type: none;
+    border: 2px solid #33322E;;
+    border-radius: 12px;
+    width: 100%;
+    height: 64px;
+    line-height: 64px;
+    display: block;
+    margin-bottom: 16px;
+    background-color: rgb(249, 243, 230);
+    font-size: 18px;
+}
+
+.todo-content {
+    padding-left: 12px;
+}
+
+.todo-done {
+    color: green;
+}
+
+.handle{
+    float: right;
+    position: relative;
+    right: 12px;
+    font-size: 14px;
+}
+

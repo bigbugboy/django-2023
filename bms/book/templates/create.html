@@ -1,0 +1,40 @@
+{% extends 'index.html' %}
+
+
+{% block content %}
+    <h1 class="text-center">书籍添加</h1>
+    <form action="/book/create" method="post">
+        {% csrf_token %}
+        <p>
+            书名:
+            <input type="text" name="title" class="form-control">
+        </p>
+        <p>
+            价格:
+            <input type="text" name="price" class="form-control">
+        </p>
+        <p>
+            出版日期:
+            <input type="date" name="publish_date" class="form-control">
+        </p>
+        <p>
+            出版社:
+            <select name="publisher" class="form-control">
+                {% for p in publishers %}
+                    <option value="{{ p }}">{{ p }}</option>
+                {% endfor %}
+            </select>
+        </p>
+        <p>
+            作者:
+            <select name="authors" multiple class="form-control">
+                {% for a in authors %}
+                    <option value="{{ a }}">{{ a }}</option>
+                {% endfor %}
+            </select>
+        </p>
+        <input type="submit" value="新增" class="btn btn-primary btn-block">
+    </form>
+   
+
+{% endblock %}

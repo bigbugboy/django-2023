@@ -1,0 +1,50 @@
+{% extends 'index.html' %}
+
+
+{% block content %}
+    <h1 class="text-center">编辑书籍</h1>
+    <form action="/book/edit/{{ book.id }}" method="post">
+        {% csrf_token %}
+        <p>
+            书名:
+            <input type="text" name="title" class="form-control" value="{{ book.title }}">
+        </p>
+        <p>
+            价格:
+            <input type="text" name="price" class="form-control" value="{{ book.price }}">
+        </p>
+        <p>
+            出版日期:
+            <input type="date" name="publish_date" class="form-control" value="{{ book.publish_date | date:'Y-m-d' }}">
+        </p>
+        <p>
+            出版社:
+            <select name="publisher" class="form-control">
+                {% for p in publishers %}
+                    {% if book.publish == p %}
+                        <option value="{{ p }}" selected>{{ p }}</option>
+                    {% else %}
+                        <option value="{{ p }}" >{{ p }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </p>
+        <p>
+            作者:
+            <select name="authors" id="" multiple class="form-control">
+                {% for a in authors %}
+                    {% if a in book.authors %}
+                        <option value="{{ a }}" selected>{{ a }}</option>
+                    {% else %}
+                        <option value="{{ a }}" >{{ a }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </p>
+        <input type="submit" value="编辑" class="btn btn-primary btn-block">
+
+
+    </form>
+
+
+{% endblock %}

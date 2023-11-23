@@ -1,0 +1,54 @@
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMS</title>
+    <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'bootstrap-3.4.1/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'sweetalert2/sweetalert2.min.css' %}">
+    <link rel="stylesheet" href="{% static 'font-awesome-4.7.0/css/font-awesome.min.css' %}">
+<!--    <link rel="stylesheet" href="https://at.alicdn.com/t/font_1980886_yx87h2ul8c.css">-->
+    <script src="{% static 'jquery.min.js' %}"></script>
+    <script src="{% static 'bootstrap-3.4.1/bootstrap.min.js' %}"></script>
+    <script src="{% static 'sweetalert2/sweetalert2.all.min.js' %}"></script>
+
+    {% block css%}
+    <style>
+        body {
+            background-image: url("{% static 'image/bg.jpg' %}")
+        }
+    </style>
+    {% endblock %}
+
+
+
+</head>
+<body>
+    <div class="container" style="margin-top: 50px;">
+        <div class="row">
+            <div class="col-8 col-offset-2">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                      <h3 class="panel-title">Book Manage System</h3>
+                    </div>
+                    <div class="panel-body">
+                        {% block content %}
+                            <div class="jumbotron">
+                                <h1>欢迎来到自学网最大的读书平台!</h1>
+                                <p>您想要的书籍全都有</p>
+                                <p><a class="btn btn-primary btn-lg" role="button" href="/book/list">开始吧~</a></p>
+                            </div>
+                        {% endblock %}
+                    </div>
+                  </div>
+            </div>
+          </div>
+
+    </div>
+
+    {% block js %}
+    {% endblock %}
+</body>
+</html>
