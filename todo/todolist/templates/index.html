@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 
 <head>
     {% load static %}
@@ -9,7 +9,7 @@
     <title>Todo List | 亲自动手实现一个吧</title>
     <meta name="keywords" content="Todo List,网页todo,备忘录"/>
     <meta name="description" content="我自己的在线备忘录"/>
-    <link rel="shortcut icon" href="{% static 'image/favicon.png' %}" type="image/x-icon">
+    <link rel="shortcut icon" href="{% static 'img/favicon.png' %}" type="image/x-icon">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'bootstrap-3.4.1/bootstrap.min.css' %}">
     <script src="{% static 'jquery.min.js' %}"></script>
@@ -19,15 +19,15 @@
 <body>
 <div id="title">Todo List</div>
 <!-- 输入区   -->
-<form action="/app01/todo_create" method="post" class="form-inline inputZone">
+<form action="/create" method="post" class="form-inline inputZone">
     <input type="text" id="input" name="title" class="form-control"
            placeholder="新增待办事项..."
            autofocus
     />
     <button id="input-btn" class="btn btn-default">提交</button>
     {% csrf_token %}
+    {% include 'messages.html' %}
 </form>
-<div class="tip">{{ tip }}</div>
 <!-- 展示区   -->
 <div class="panel panel-primary list">
     <div class="panel-heading">
@@ -37,7 +37,7 @@
         <div id="list">
             {% if todos %}
             <ul>
-                {% for todo in todos reversed %}
+                {% for todo in todos %}
                 <li>
                     {% if todo.status == 0 %}
                     <span class="todo-content">{{ todo.title }}</span>
@@ -48,11 +48,11 @@
 
                     <div class="handle">
                         {% if todo.status == 0 %}
-                        <a href="/app01/todo_status/{{ todo.pk }}">完成</a>
+                        <a href="/status/{{ todo.pk }}">完成</a>
                         {% else %}
-                        <a href="/app01/todo_status/{{ todo.pk }}">未完成</a>
+                        <a href="status/{{ todo.pk }}">未完成</a>
                         {% endif %} |
-                        <a href="/app01/todo_delete/{{ todo.pk }}">删除</a>
+                        <a href="/delete/{{ todo.pk }}">删除</a>
                     </div>
 
                 </li>

@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <!-- 必须的 meta 标签 -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Todo List | 亲自动手实现一个吧</title>
+    <meta name="keywords" content="Todo List,网页todo,备忘录"/>
+    <meta name="description" content="我自己的在线备忘录"/>
+
+    <!-- Bootstrap 的 CSS 文件 -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="shortcut icon" href="{% static 'img/favicon.png' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'css/todo.css' %}">
+    <script scr="{% static 'js/todo.js' %}"></script>
+  </head>
+  <body>
+    {% block content %} {% endblock %}
+
+    <!-- 选项 1：jQuery 和 Bootstrap 集成包（集成了 Popper） -->
+    <script src="{% static 'js/jquery.slim.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js'%}"></script>
+    {% block js %} {% endblock %}
+
+
+  </body>
+</html>

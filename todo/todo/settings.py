@@ -9,7 +9,6 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-import os
 from pathlib import Path
 import pymysql
 
@@ -41,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'app01',
+    'todolist'
 ]
 
 MIDDLEWARE = [
@@ -85,7 +84,7 @@ DATABASES = {
         'USER': 'root',
         'PASSWORD': '12345',
         'HOST': '127.0.0.1',
-        'PORT': 3307,
+        'PORT': 3306,
         'CHARSET': 'utf8'
     }
 }

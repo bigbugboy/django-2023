@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2 clearfix">
+            <!-- 输入区   -->
+            <h1 class="text-center mb-3">Todo List</h1>
+            <form action="/add" method="post" id="form">
+                <input type="text" name="title" class="form-control" id="input" placeholder="新增待办事项...">
+                <input type="submit" id="inputBtn" value="提交">
+                {% csrf_token %}
+            </form>
+            {% include 'messages.html' %}
+        </div>
+    </div>
+
+    <div class="row my-3">
+        <div class="col-md-8 offset-md-2">
+            <!-- 展示区 -->
+            <div class="card blackBorder">
+                <div class="card-body">
+                    {% if todos %}
+                    <ul>
+                        {% for todo in todos %}
+                        <li class="todo {% if todo.status%}check{% endif %}">
+                            {% if todo.status %}
+                            <svg xmlns="http://www.w3.org/2000/svg" todoID="{{todo.id}} fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
+                              </svg>
+                            {% else %}
+                            <svg xmlns="http://www.w3.org/2000/svg" todoID="{{todo.id}} fill="currentColor" class="bi bi-circle"
+                                viewBox="0 0 16 16">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                            </svg>
+                            {% endif %}
+                            <span class="todo-content">{{ todo.title }}</span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <p>添加你的第一个代办事项！📝</p>
+                    <p>所有提交操作支持 Enter 回车键提交~</p>
+                    <p>每次点击操作都会刷新页面~</p>
+                    <p>🔒 所有的 Todo 数据存储在 MySQL 数据库~</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+
+{% block js %}
+<script src="{% static 'js/todo.js' %}"></script>
+{% endblock %}
