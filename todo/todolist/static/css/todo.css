@@ -58,9 +58,19 @@ li.todo {
     font-size: 18px;
     box-shadow: 4px 4px 0 #33322E;
     transition: all .5s ease;
+    overflow: hidden;
 }
 
 li.todo:hover {
+    box-shadow: none;
+}
+
+/* 删除todo是隐藏li标签，触发特效动画 */
+li.hidden {
+    height: 0;
+    border: 0;
+    margin: 0;
+    padding: 0;
     box-shadow: none;
 }
 
@@ -69,7 +79,7 @@ li.check {
     text-decoration: line-through;
 }
 
-li svg {
+li img {
     position: relative;
     top: -3px;
     width: 30px;
@@ -77,8 +87,13 @@ li svg {
     margin-right: 10px;
 }
 
-li svg:hover {
+li img:hover {
     position: relative;
     width: 35px;
     height: 35px;
+}
+
+li img.todoRemoveIcon {
+    float: right;
+    top: 13px;
 }

@@ -35,5 +35,5 @@ def change_status(request, pk):
 
 def delete_todo(request, pk):
     models.TodoList.objects.filter(pk=pk).delete()
-    return redirect(to='todolist')
+    return JsonResponse({'delete': True})
 
