@@ -6,9 +6,11 @@
     <div class="row">
         <div class="col-md-8 offset-md-2 clearfix">
             <!-- 输入区   -->
-            <h1 class="text-center mb-3">Todo List</h1>
+            <div id="title">
+                <img src="{% static 'img/cute-cat.png' %}" id="title">
+            </div>
             <form action="/add" method="post" id="form">
-                <input type="text" name="title" class="form-control" id="input" placeholder="新增待办事项..."
+                <input type="text" name="title" autofocus class="form-control" id="input" placeholder="新增待办事项..."
                     autocomplete="off">
                 <input type="submit" id="inputBtn" value="提交">
                 {% csrf_token %}
@@ -22,6 +24,7 @@
             <!-- 展示区 -->
             <div class="card blackBorder">
                 <div class="card-body">
+                    <h5 class="font-weight-bolder">今日事今日毕，勿将今事待明日!</h5>
                     {% if todos %}
                     <ul>
                         {% for todo in todos %}
@@ -37,10 +40,13 @@
                         {% endfor %}
                     </ul>
                     {% else %}
-                    <p>添加你的第一个代办事项！📝</p>
-                    <p>所有提交操作支持 Enter 回车键提交~</p>
-                    <p>每次点击操作都会刷新页面~</p>
-                    <p>🔒 所有的 Todo 数据存储在 MySQL 数据库~</p>
+                    <div id="tip">
+                        <p>添加你的第一个代办事项！📝</p>
+                        <p>所有提交操作支持 Enter 回车键提交~</p>
+                        <p>新增操作会刷新页面~</p>
+                        <p>完成和删除操作使用Ajax实现, 不会刷新页面~</p>
+                        <p>所有的 Todo 数据存储在 MySQL 数据库~</p>
+                    </div>
                     {% endif %}
                 </div>
             </div>

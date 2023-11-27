@@ -4,6 +4,13 @@ body {
     background-color:rgb(234, 246, 252) !important;
 }
 
+#title {
+    text-align: center;
+}
+#title img {
+    width: 300px;
+}
+
 /* 表单输入区-开始 */
 #form {
     position: relative;
@@ -24,8 +31,9 @@ body {
     height: 64px;
     width: 100px;
     font-size: 18px;
+    font-weight: 500;
     background-color: rgb(144, 207, 199);
-    color: rgb(80, 80, 80);
+    color: rgb(20, 20, 20);
     border: 2px solid black;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
@@ -40,8 +48,13 @@ body {
 }
 
 /* 表单输入区-结束 */
+#tip {
+    margin: 30px;
+}
+
 ul {
     padding: 0;
+    margin-top: 30px;
 }
 
 li.todo {

@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import datetime
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
@@ -10,7 +10,12 @@ from . import models
 
 def todolist(request, *args):
     # https://ricocc.com/todo/
-    todos = models.TodoList.objects.filter(created_at=date.today()).all()
+    today = datetime.today()
+    todos = models.TodoList.objects.filter(
+        created_at__year=today.year,
+        created_at__month=today.month,
+        created_at__day=today.day,
+    ).all()
     return render(request, 'todo.html', context={'todos': todos})
 
 
@@ -25,7 +30,6 @@ def add_todo(request):
 
 
 
-@csrf_exempt
 def change_status(request, pk):
     todo = get_object_or_404(models.TodoList, pk=pk)
     todo.status = not todo.status

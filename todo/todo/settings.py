@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'todolist'
+    'todolist',
 ]
 
 MIDDLEWARE = [
@@ -84,7 +84,7 @@ DATABASES = {
         'USER': 'root',
         'PASSWORD': '12345',
         'HOST': '127.0.0.1',
-        'PORT': 3307,
+        'PORT': 3306,
         'CHARSET': 'utf8'
     }
 }
@@ -114,11 +114,11 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
-USE_TZ = True
+USE_TZ = False      # USE_TZ设置为False同时把TIME_ZONE设置为'Asia/Shanghai'才能使用北京时间
 
 
 # Static files (CSS, JavaScript, Images)
