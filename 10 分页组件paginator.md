@@ -1,7 +1,3 @@
-# 10 分页组件paginator
-
-
-
 分页的必要性：
 
 - 网页上无法展示所有数据，只能展示部分数据
@@ -11,7 +7,9 @@
 
 
 
-## 手动实现分页
+------
+
+# 手动实现分页
 
 - offset和limit 此时需要执行原生SQL语句
 
@@ -55,7 +53,9 @@ def book_list(request):
 
 
 
-## 使用paginator实现分页
+------
+
+# 使用paginator实现分页
 
 - 参考官方文档：https://docs.djangoproject.com/zh-hans/4.2/topics/pagination/
 
@@ -77,14 +77,41 @@ def book_list(request):
 
 
 
-**HTML页面配置**（默认size=1）
+**总结：分页对象常用方法和属性**
+
+~~~python
+# 分页对象
+paginator = Paginator(all_books, size)
+
+paginator.count			# 数据总数
+paginator.num_pages		# 总页数
+paginator.page_range	# 页码的列表
+
+
+# page对象
+page_obj = paginator.get_page(1)	# 第1页的page对象
+for object in page_obj:
+    print(object)					# 每页的数据
+page_obj.object_list				# 第1页的所有数据, 等价于直接循环page_obj
+
+page_obj.number						# 当前面的页面
+page_obj.has_next()					# 是否有下一页
+page_obj.next_page_number()) 		# 下一页的页码
+page_obj.has_previous()				# 是否有上一页
+page_obj.previous_page_number()		# 上一页的页码
+page_obj.paginator					# 可以拿到paginator对象
+~~~
+
+
+
+**HTML页面配置**
 
 ~~~html
 <div class="pagination">
     <span class="step-links">
         {% if books.has_previous %}
-            <a href="?page=1">&laquo; first</a>
-            <a href="?page={{ books.previous_page_number }}">previous</a>
+            <a href="?page=1">&laquo; 首页</a>
+            <a href="?page={{ books.previous_page_number }}">上一页</a>
         {% endif %}
 
         <span class="current">
@@ -92,8 +119,8 @@ def book_list(request):
         </span>
 
         {% if books.has_next %}
-            <a href="?page={{ books.next_page_number }}">next</a>
-            <a href="?page={{ books.paginator.num_pages }}">last &raquo;</a>
+            <a href="?page={{ books.next_page_number }}">下一页</a>
+            <a href="?page={{ books.paginator.num_pages }}">尾页 &raquo;</a>
         {% endif %}
     </span>
 </div>
@@ -107,7 +134,9 @@ def book_list(request):
 
 
 
-## 集成bootstrap的分页组件
+------
+
+# 集成bootstrap的分页组件
 
 - 参考官网：https://v3.bootcss.com/components/#pagination
 
@@ -150,11 +179,11 @@ def book_list(request):
         {% endif %}
         
         {% for p in books.paginator.page_range %}
-        {% if p == books.number %}
-        <li class="active"><a href="?page={{ p }}">{{ p }}</a></li>
-        {% else %}
-        <li><a href="?page={{ p }}">{{ p }}</a></li>
-        {% endif %}
+            {% if p == books.number %}
+            	<li class="active"><a href="?page={{ p }}">{{ p }}</a></li>
+            {% else %}
+            	<li><a href="?page={{ p }}">{{ p }}</a></li>
+            {% endif %}
         {% endfor %}
 
         {% if books.has_next %}

@@ -1,8 +1,6 @@
-# 11 邮件组件mail
+------
 
-
-
-## mail的配置和基本使用
+# mail的配置和基本使用
 
 **视图函数使用mail组件**
 
@@ -16,7 +14,7 @@ def index(request):
         'Subject here',				# 配置邮件主题
         'Here is the message.',		# 邮件内容
         'from@qq.com',				# 配置发件人
-        ['xu.liu@example.com'],	    # 支持配置多个收件人
+        ['liuxu_text@example.com'],	    # 支持配置多个收件人
     )
     return HttpResponse('ok')
 
@@ -30,7 +28,7 @@ def index(request):
 EMAIL_HOST = "smtp.qq.com"					# 配置邮件服务器
 EMAIL_PORT = 25								# 邮件服务端口
 EMAIL_HOST_USER = "xxx@qq.com"				# 发件人账号
-EMAIL_HOST_PASSWORD = "ncwsycmyqsytggfa"	# 发件人密码（授权码）
+EMAIL_HOST_PASSWORD = "ncwsycmyqsytggfa"	# 发件人密码（如QQ邮箱的账号授权码）
 
 ~~~
 
@@ -52,7 +50,7 @@ EMAIL_HOST_PASSWORD = "ncwsycmyqsytggfa"	# 发件人密码（授权码）
 
 
 
-## 模拟注册账号发激活邮件
+# 模拟注册账号发激活邮件
 
 注册账号后，用户一般会收到激活邮件，在邮件中点击激活链接，完成账号的激活。
 
@@ -116,12 +114,11 @@ def register(request):
             age=int(request.POST.get('age')),
             birthday=request.POST.get('birthday')
         )
-        # 独立线程发邮件，用户体验感更好
         send_mail(
             'Subject here',
             f'http://127.0.0.1:8000/app01/activate_account?user={u.username}',
-            '1505797244@qq.com',
-            ['xu.liu@example.net'],
+            'liuxu_text@qq.com',
+            ['liuxu_text@example.net'],
         )
 
         return HttpResponse('请查收邮件并点击链接激活账号')
@@ -143,19 +140,35 @@ def activate_account(request):
 
 
 
-**使用多线程，单独发邮件**
+
+
+
+
+------
+
+# 使用多线程提高注册体验
+
+注册账号的过程中，发邮件是一个非常耗时的环节，如果按照之前的编码方式，则需要用户在注册页面等待很久才能结束注册环节，用户体验是非常差的。
+
+这种情况下可以使用多线程的方式，单独开一个子线程执行发送激活邮件的任务，主线程可以快速结束注册任务。然后用户可以悠然自得等待邮件即可。
+
+
+
+**DEMO**
 
 ~~~python
+from threading import Thread
+from . import models
+
+
 def send_email(user):
     send_mail(
         'Subject here',
         f'http://127.0.0.1:8000/app01/activate_account?user={user.username}',
-        '1505797244@qq.com',
-        ['xu.liu@example.net'],
+        'liuxu_text@qq.com',
+        ['liuxu_test@example.net'],
     )
 
-    
-from threading import Thread
 
 def register(request):
     if request.method == 'POST':
