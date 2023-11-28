@@ -4,7 +4,7 @@
     <!-- 必须的 meta 标签 -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Todo List | 亲自动手实现一个吧</title>
+    <title>Todo List|亲自动手实现一个吧</title>
     <meta name="keywords" content="Todo List,网页todo,备忘录"/>
     <meta name="description" content="我自己的在线备忘录"/>
 
@@ -13,7 +13,8 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="shortcut icon" href="{% static 'img/favicon.png' %}" type="image/x-icon">
     <link rel="stylesheet" href="{% static 'css/todo.css' %}">
-    <script scr="{% static 'js/todo.js' %}"></script>
+    {% block css %}{% endblock %}
+
   </head>
   <body>
     {% block content %} {% endblock %}

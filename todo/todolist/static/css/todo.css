@@ -7,6 +7,7 @@ body {
 #title {
     text-align: center;
 }
+
 #title img {
     width: 300px;
 }
@@ -48,6 +49,7 @@ body {
 }
 
 /* 表单输入区-结束 */
+
 #tip {
     margin: 30px;
 }

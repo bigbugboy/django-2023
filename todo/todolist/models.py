@@ -4,7 +4,7 @@ from django.db import models
 class TodoList(models.Model):
     objects: models.query.QuerySet
 
-    title = models.CharField(max_length=255)   
+    title = models.CharField(max_length=50)   
     status = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 

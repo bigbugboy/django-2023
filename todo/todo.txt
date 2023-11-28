@@ -1,0 +1,19 @@
+1 项目介绍和演示
+2 设计和创建表模型
+3 todolist页面
+4 使用bootstrap实现页面布局
+5 使用bootstrap美化输入区UI
+6 新增todolist并展示
+7 修改时区和查询过滤
+8 使用message组件
+9 美化todolist展示区UI
+10 切换todolist的完成状态
+11 使用Ajax提高用户体验
+12 删除todolist
+13 优化和总结 
+    - 输入框不要补全
+    - 输入框自动聚焦
+    - 输入内容太多怎么处理
+    - 提交todolist时不要刷新页面
+    - 可以把数据存在浏览器本地(那就不需要mysql和后端服务了)
+

@@ -35,9 +35,10 @@ function handleRemoveTodo(e) {
         fetch(`/delete/${todoID}`).then((res) => res.json()).then((data) => {
             if (data.delete) {
                 e.target.parentNode.classList.add('hidden')
+                
+                // 如果没有todo了，则刷新页面到初始画面
                 const leftLi = e.target.parentNode.parentNode.querySelectorAll('li:not(.hidden)')
                 if (leftLi.length === 0) {
-                    // 刷新页面
                     location.reload()
                 }
             }
