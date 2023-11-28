@@ -4,7 +4,7 @@
 {% block content %}
 <div class="container mt-5">
     <div class="row">
-        <div class="col-md-8 offset-md-2 clearfix">
+        <div class="col-md-8 offset-md-2">
              <!-- 输入区   -->
             <div id="title">
                 <img src="{% static 'img/cute-cat.png' %}" id="title">
@@ -36,7 +36,7 @@
                             {% endif %}
                             <!-- 简单的截断方法 -->
                             <!-- <span class="todo-content">{{ todo.title|truncatechars:15 }}</span> -->
-                            <span class="todo-content">{{ todo.title }}</span>
+                            <span>{{ todo.title }}</span>
                             <img src="{% static 'img/remove.png' %}" class="todoRemoveIcon" todoID="{{todo.id}}" alt="">
                         </li>
                         {% endfor %}
