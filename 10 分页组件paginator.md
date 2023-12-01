@@ -71,8 +71,8 @@ def book_list(request):
 
     all_books = models.Book.objects.all()
     paginator = Paginator(all_books, size)
-    books = paginator.get_page(page)
-    return render(request, 'list.html', {'books': books})
+    page = paginator.get_page(page)
+    return render(request, 'list.html', {'page': page})
 ~~~
 
 
@@ -107,20 +107,27 @@ page_obj.paginator					# 可以拿到paginator对象
 **HTML页面配置**
 
 ~~~html
+<ul>
+    {% for obj in page %}
+    <li>{{ obj.name }}<li>
+    {% endfor %}
+</ul>
+
+
 <div class="pagination">
     <span class="step-links">
-        {% if books.has_previous %}
+        {% if page.has_previous %}
             <a href="?page=1">&laquo; 首页</a>
-            <a href="?page={{ books.previous_page_number }}">上一页</a>
+            <a href="?page={{ page.previous_page_number }}">上一页</a>
         {% endif %}
 
         <span class="current">
-            Page {{ books.number }} of {{ books.paginator.num_pages }}.
+            Page {{ page.number }} of {{ page.paginator.num_pages }}.
         </span>
 
         {% if books.has_next %}
-            <a href="?page={{ books.next_page_number }}">下一页</a>
-            <a href="?page={{ books.paginator.num_pages }}">尾页 &raquo;</a>
+            <a href="?page={{ page.next_page_number }}">下一页</a>
+            <a href="?page={{ page.paginator.num_pages }}">尾页 &raquo;</a>
         {% endif %}
     </span>
 </div>
