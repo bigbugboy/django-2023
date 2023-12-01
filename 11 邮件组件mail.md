@@ -50,6 +50,8 @@ EMAIL_HOST_PASSWORD = "ncwsycmyqsytggfa"	# 发件人密码（如QQ邮箱的账�
 
 
 
+------
+
 # 模拟注册账号发激活邮件
 
 注册账号后，用户一般会收到激活邮件，在邮件中点击激活链接，完成账号的激活。
@@ -61,12 +63,10 @@ EMAIL_HOST_PASSWORD = "ncwsycmyqsytggfa"	# 发件人密码（如QQ邮箱的账�
 ~~~python
 def register(request):
     if request.method == 'POST':
-        print(request.POST)
+        # TODO: 用户提交的数据应该校验后再注册账号
         u = models.User.objects.create(
             username=request.POST.get('username'),
-            password=request.POST.get('password'),
-            age=int(request.POST.get('age')),
-            birthday=request.POST.get('birthday')
+            password=request.POST.get('password'),	# TODO: 密码需要加密处理
         )
         return HttpResponse('ok')
     return render(request, 'register.html')
@@ -88,8 +88,6 @@ def register(request):
   <p>用户名: <input type="text" name="username"></p>
   <p>密码: <input type="password" name="password"></p>
   <p>确认密码: <input type="password" name="re_password"></p>
-  <p>年龄: <input type="text" name="age"></p>
-  <p>出生日期: <input type="date" name="birthday"></p>
   <input type="submit" value="注册">
     {% csrf_token %}
 </form>
@@ -116,7 +114,7 @@ def register(request):
         )
         send_mail(
             'Subject here',
-            f'http://127.0.0.1:8000/app01/activate_account?user={u.username}',
+            f'http://127.0.0.1:8000/app11/activate_account?user={u.username}',
             'liuxu_text@qq.com',
             ['liuxu_text@example.net'],
         )
@@ -164,7 +162,7 @@ from . import models
 def send_email(user):
     send_mail(
         'Subject here',
-        f'http://127.0.0.1:8000/app01/activate_account?user={user.username}',
+        f'http://127.0.0.1:8000/app11/activate_account?user={user.username}',
         'liuxu_text@qq.com',
         ['liuxu_test@example.net'],
     )
@@ -176,8 +174,6 @@ def register(request):
         u = models.User.objects.create(
             username=request.POST.get('username'),
             password=request.POST.get('password'),
-            age=int(request.POST.get('age')),
-            birthday=request.POST.get('birthday')
         )
         # 独立线程发邮件，用户体验感更好
         t = Thread(target=send_email, args=[u])

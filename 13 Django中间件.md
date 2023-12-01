@@ -1,8 +1,10 @@
-# 13 Django中间件
 
 
 
-## Django请求生命周期
+
+------
+
+# Django请求生命周期
 
 Django请求生命周期，也称Django生命周期流程图。本质上说就是在请求进来时，django是如何处理这个请求的，中间经历了哪些环节。
 
@@ -31,7 +33,9 @@ Django请求生命周期，也称Django生命周期流程图。本质上说就�
 
 
 
-## 中间件
+------
+
+# 中间件
 
 Django 中间件是在请求和响应处理过程中介入的组件，它可以对请求和响应进行预处理、后处理或者进行其他操作。中间件可以用于实现各种功能，如身份验证、日志记录、缓存、跨域资源共享（CORS）等。
 
@@ -89,7 +93,11 @@ MIDDLEWARE = [
 
 
 
-## 中间件的执行顺序
+
+
+------
+
+# 中间件的执行顺序
 
 按照注册中间件的注册顺序
 
@@ -97,8 +105,6 @@ MIDDLEWARE = [
 - 响应阶段，从下往上
 
 >理解记忆：洋葱模型
-
-
 
 ~~~python
 from django.http import HttpRequest, HttpResponse
@@ -126,6 +132,17 @@ class MyMiddleware2:
         print('MyMiddleware2, 响应')
 
         return res
+    
+ 
+"""
+打印结果
+
+MyMiddleware1, 请求
+MyMiddleware2 请求
+....
+MyMiddleware2, 响应
+MyMiddleware1, 响应
+"""
 ~~~
 
 配置settings.py
@@ -147,23 +164,15 @@ MIDDLEWARE = [
 
 
 
-打印结果
-
-~~~
-MyMiddleware1, 请求
-MyMiddleware2 请求
-....
-MyMiddleware2, 响应
-MyMiddleware1, 响应
-~~~
 
 
 
 
 
 
+------
 
-## 使用MiddlewareMixin创建中间件
+# MiddlewareMixin
 
 为了方便自定义中间件，Django提供了一个便捷方式：自定义类的时候继承 MiddlewareMixin，然后按需要定义合适的方式即可：
 
@@ -177,9 +186,7 @@ MyMiddleware1, 响应
 
 **请求来的时候穿过的方法**：`process_request`
 
-- 请求阶段，经过每一个中间件的 `process_request` 方法；
-- 如果一个中间件里面没有定义该方法，那么直接跳过执行下一个中间件的 `process_request` 方法；
-- 如果该方法返回了 `HttpResponse` 对象，那么请求将不再继续往后执行而是直接原路返回，进入响应阶段；返回的是其他数据，则不会影响请求进入下一个中间件；
+- 请求阶段，如果一个中间件中定义了 `process_request` 方法，则执行它。
 
 ```python
 from django.utils.deprecation import MiddlewareMixin
@@ -188,18 +195,16 @@ from django.utils.deprecation import MiddlewareMixin
 class MyMiddleWare(MiddlewareMixin):
 
     def process_request(self, request):
-        print('我是第1个process_request')
+        print('我来自 process_request')
 ```
 
 
 
 **响应走的时候穿过的方法**：`process_response`
 
-- 响应阶段，经过每一个中间件里面的 `process_response` 方法；
+- 响应阶段，如果中间件定义了 `process_response` 方法，则执行它。
 - 该方法有两个参数`request`，`response`；
 - 该方法必须返回一个`HttpResponse`对象：默认情况下返回的就是形参`response`，你也可以自己返回被换成自己的；
-- 执行顺序是注册的中间件从下往上依次经过，如果你没有定义的话，直接跳过执行下一个（**原路返回**）；
-- 如果在第一个`process_request`方法就已经返回了`HttpResponse`对象，则会直接走同级别的`process_reponse`返回，不再执行后续其他中间件和视图函数了。
 
 ```python
 from django.utils.deprecation import MiddlewareMixin
@@ -210,7 +215,7 @@ class MyMiddleWare(MiddlewareMixin):
 
     def process_response(self, request, response):
 
-        print('我是第1个process_response')
+        print('我是来自 process_response')
         return response
     	# return HttpResponse('狸猫换太子')
 ```
@@ -273,7 +278,51 @@ class MyMiddleWare(MiddlewareMixin):
 
 
 
-## 中间件实现登录验证
+**重要的问题**
+
+-  如果 `process_request` 返回了 `HttpResponse` 对象，那么请求将不再继续往后执行而是直接原路返回，进入响应阶段。
+
+```python
+from django.utils.deprecation import MiddlewareMixin
+
+
+class MyMiddleWare(MiddlewareMixin):
+
+    def process_request(self, request):
+        print('我是 process_request')
+```
+
+
+
+- 方法 `process_response` 必须返回一个`HttpResponse`对象，默认情况下返回的就是形参`response`，但你也可以自己返回被换成自己的。
+
+- 如果在第一个中间件的`process_request`方法就已经返回了`HttpResponse`对象，则会直接走同级别的`process_reponse`返回，不再执行后续其他中间件和视图函数了。
+
+```python
+from django.utils.deprecation import MiddlewareMixin
+from django.http import HttpResponse
+
+
+class MyMiddleWare(MiddlewareMixin):
+
+    def process_response(self, request, response):
+
+        print('我是 process_response')
+        return response
+    	# return HttpResponse('狸猫换太子')
+```
+
+
+
+
+
+
+
+
+
+------
+
+# 中间件实现登录验证
 
 有些网站的某些网页需要登陆后的用户才能浏览，这种机制我们可以使用中间件来实现。
 
@@ -292,14 +341,15 @@ def login(request):
     else:
         username = request.POST.get('username')
         password = request.POST.get('password')
-        if username == 'liuxu' and password == '12345':
-            res = HttpResponse('login success')
-            res.cookies['xxx'] = 'QWERT'
+        if User.objects.filter(username=username, password=password).exists():
+            res = redirect(to='home')
+            res.cookies['token'] = username
             return res
         else:
             return HttpResponse('login failed')
 
 
+# 如下两个视图都需要登录后才可以访问
 def home(request):
     return HttpResponse('home')
 
@@ -312,7 +362,7 @@ def vip(request):
 
 中间件处理
 
-- 如果访问的URL是 /app01/vip 页面需要登录认证（检查cookie中是否有登录凭证），有且正确就放行，没有的话调整到登录页
+- 如果访问的URL不是登录URL，都需要登录认证（检查cookie中是否有登录凭证），有且正确就放行，没有的话调整到登录页
 
 ~~~python
 from django.http import HttpRequest, HttpResponse
@@ -324,14 +374,13 @@ class AuthMiddleware:
         self.get_response = get_response
 
     def __call__(self, request: HttpRequest) -> HttpResponse:
-        xxx = request.COOKIES.get('xxx')
+        token = request.COOKIES.get('token')
         path = request.path_info
-        print(path, xxx)
-        if path == '/app01/vip' and xxx != 'QWERT':
-            return redirect('/app01/login')
-        res = self.get_response(request)
-
-        return res
+        print(path, token)
+        if path != '/app13/login' and not token:
+            return redirect('login')
+        
+        return self.get_response(request)
 ~~~
 
 
@@ -342,7 +391,9 @@ class AuthMiddleware:
 
 
 
-## 中间件实现限流
+------
+
+# 中间件实现限流
 
 在Django中，可以使用中间件来实现请求限流。请求限流是一种控制请求频率的机制，可以防止恶意用户或者过多的请求对服务器造成过大的压力。下面是一个简单的示例，演示如何在Django中使用中间件进行请求限流。
 
@@ -352,6 +403,9 @@ class AuthMiddleware:
 - 我们使用Django的缓存系统来记录每个IP地址的请求计数器，以及计数器的过期时间。
 
 ```python
+from django.core.cache import cache
+
+
 class RateLimitMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response

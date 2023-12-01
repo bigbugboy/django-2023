@@ -1,5 +1,3 @@
-# 12 后台管理组件admin
-
 django的admin后台管理系统提供了功能强大的后台管理功能，为每一张表提供了增删改查操作。
 
 admin的使用需要做一些基本配置：
@@ -9,7 +7,11 @@ admin的使用需要做一些基本配置：
 
 
 
-## 创建管理员账号
+
+
+------
+
+# 创建管理员账号
 
 创建admin超级用户有两种方式：命令行、代码方式
 
@@ -23,7 +25,7 @@ python manage.py createsuperuser
 
 
 
-**代码方式**
+**Django shell 使用代码的方式创建**
 
 ~~~python
 from django.contrib.auth.models import User
@@ -34,6 +36,8 @@ User.objects.create_superuser(
     password='12345'
 )
 ~~~
+
+
 
 **注意：不论何种方式创建的用户，最终都是保存在表auth_user中**
 
@@ -83,7 +87,9 @@ is_superuser: 1
 
 
 
-## 注册并管理表
+------
+
+# 注册并管理表
 
 默认情况下，admin页面中并没有我们自己创建的应用的表，需要手动注册后才能在admin中展示和操作。
 
@@ -138,7 +144,9 @@ http://127.0.0.1:8000/admin/app01/apple/8/delete/  删
 
 
 
-## 后台页面基本配置
+------
+
+# 后台页面基本配置
 
 admin页面有很多配置项，比如表名、字段名、提示信息等等。
 
@@ -210,18 +218,16 @@ admin.site.site_title = 'admin_title'
 
 
 
-## 自定义展示的表字段
+------
+
+# 自定义展示的表字段
 
 django admin注册模型时提供了两种方式，一种的简单的方式（前两小节的方式）
 
 ~~~python
 # 基础注册方式（展示所有字段）
 from django.contrib import admin
-
-# Register your models here.
-
 from . import models
-
 
 admin.site.register(models.User)
 admin.site.register(models.Apple)
@@ -235,26 +241,17 @@ admin.site.register(models.Apple)
 
 ~~~python
 from django.contrib import admin
-
 from . import models
-
 
 admin.site.site_header = '我的站点后台管理'
 admin.site.index_title = 'ADMIN'
 admin.site.site_title = 'admin_title'
 
 
-
 class UserAdmin(admin.ModelAdmin):
     list_display = ['id', "username", 'age']    # 列表展示字段
     fields = ["username", "age"]    			# 新建/编辑时的字段
     exclude = ["sex"]       					# 排除的不展示字段
-
-
-
-# 如果只是简单的继承，和一般的注册方式一样
-class AppleAdmin(admin.ModelAdmin):
-    pass
 
 
 admin.site.register(models.User, UserAdmin)
@@ -267,7 +264,9 @@ admin.site.register(models.Apple, AppleAdmin)
 
 
 
-## 自定义action
+------
+
+# 自定义action
 
 默认的action应该满足不了大多数的需求，因此Django提供了自定义action的功能
 
@@ -275,7 +274,7 @@ admin.site.register(models.Apple, AppleAdmin)
 
 **案例：批量激活账号action**
 
-- models.py。增加一个status字段，0表示未激活，1=已激活
+- models.py 增加一个status字段，0表示未激活，1=已激活
 
 ~~~python
 import time
