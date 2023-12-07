@@ -188,23 +188,21 @@
 
 5-7 nginx
 
-5-5 域名
+...
+
+5-10 域名
 
 
 
 
 
-6-1 sentry
+【采用微课的方式也不错】
 
-6-2 prometheus
+6 专题 Django ORM多表操作(10)
 
+7 专题 cookie和session(5)
 
-
-
-
-7 专题 cookie和session
-
-8 专题 form组件源码
+8 专题 form组件源码(5)
 
 
 
